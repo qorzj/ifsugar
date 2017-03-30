@@ -39,6 +39,8 @@ class SugarTry:
     def __exit__(self, *args):
         return True
 
+    def __rmatmul__(self, left_opnd):
+        return self
 
 _try = SugarTry()
 
@@ -52,22 +54,26 @@ class _times:
 
 
 if __name__ == "__main__":
-    x = 42
-    x @= 24 @_if([1, 2, 3])
-    assert x == 24
-    x @= 42 @_if({})
-    assert x == 24
+    if "test _if":
+        x = 42
+        x @= 24 @_if([1, 2, 3])
+        assert x == 24
+        x @= 42 @_if({})
+        assert x == 24
 
-    del x
-    with _try:
-        x = 3 / 0
-    x = _get(lambda: x)
-    assert x is _nil
-    with _try:
-        y = -9
-    x = _get(lambda: abs(y))
-    assert x == 9
+    if "test _try & _get":
+        del x
+        with _try:
+            x = 3 / 0
+        x = _get(lambda: x)
+        assert x is _nil
+        with "successful code" @_try:
+            y = -9
+        x = _get(lambda: abs(y))
+        assert x == 9
 
-    n = []
-    foo = lambda x: x.append(0) or str(len(x))
-    assert ''.join(5 @_times(lambda: foo(n))) == '12345'
+    if "test _times":
+        n = []
+        foo = lambda x: x.append(0) or str(len(x))
+        assert ''.join(5 @_times(lambda: foo(n))) == '12345'
+

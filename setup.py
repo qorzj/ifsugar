@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(name='ifsugar',
-       version='0.0.1',
+       version='0.1.2',
        description='syntax sugars for easyer understood coding: _if, _try, _get, _nil, _times',
        author='qorzj',
        author_email='inull@qq.com',
