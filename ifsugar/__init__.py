@@ -1,7 +1,7 @@
 """usage:
     from ifsugar import _if, _try, _times
 or
-    from ifsugar.ifsugar import *
+    from ifsugar import *
 
 x @= A @_if(B) <==> if B: x = A
 with _try: ...code... <==> try: ... code... except: pass
@@ -21,4 +21,5 @@ example:
 """
 
 from . import ifsugar
-from .ifsugar import *
+from .ifsugar import _if, _try, _times
+__all__ = ["_if", "_try", "_times"]

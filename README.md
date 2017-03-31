@@ -10,7 +10,7 @@ ifsugar is only supported by ++python3.5 or above++, because the matrix multipli
 #### Example
 ```
 from ifsugar import _if, _try, _times
-# or you can: from ifsugar.ifsugar import *
+# or you can: from ifsugar import *
 
 if __name__ == "__main__":
         if "test _if":
@@ -106,4 +106,3 @@ for _ in itertools.repeat(None, n):
 ```
 
 i.e. `n @_times` is equivalent to `itertools.repeat(None, n)`
-
