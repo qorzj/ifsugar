@@ -1,4 +1,5 @@
-__all__ = ["_nil", "_if", "_get", "_try", "_times"]
+from itertools import repeat
+__all__ = ["_if", "_try", "_times"]
 
 
 class SugarNil:
@@ -25,13 +26,6 @@ def _if(is_true):
     return SugarIf(is_true)
 
 
-def _get(func):
-    try:
-        return func()
-    except:
-        return _nil
-
-
 class SugarTry:
     def __enter__(self):
         pass
@@ -45,12 +39,12 @@ class SugarTry:
 _try = SugarTry()
 
 
-class _times:
-    def __init__(self, func):
-        self.func = func
-
+class SugarTimes:
     def __rmatmul__(self, left_opnd):
-        return (self.func() for x in range(left_opnd))
+        return repeat(None, left_opnd)
+
+
+_times = SugarTimes()
 
 
 if __name__ == "__main__":
@@ -61,19 +55,21 @@ if __name__ == "__main__":
         x @= 42 @_if({})
         assert x == 24
 
-    if "test _try & _get":
-        del x
+    if "test _try":
+        x = None
         with _try:
             x = 3 / 0
-        x = _get(lambda: x)
-        assert x is _nil
+        assert x is None
         with "successful code" @_try:
             y = -9
-        x = _get(lambda: abs(y))
-        assert x == 9
+        assert y == -9
 
     if "test _times":
         n = []
-        foo = lambda x: x.append(0) or str(len(x))
-        assert ''.join(5 @_times(lambda: foo(n))) == '12345'
+        m = list(n.append(0) or len(n) for _ in 5 @_times)
+        assert m == [1, 2, 3, 4, 5]
+        for _ in 3 @_times:
+            m.pop()
+            n.pop()
 
+        assert m == [1, 2] and n == [0, 0]
