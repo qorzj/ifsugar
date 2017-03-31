@@ -13,7 +13,7 @@ from ifsugar import _if, _try, _times
 # or you can: from ifsugar import *
 
 if __name__ == "__main__":
-        if "test _if":
+    if "test _if":
         x = 42
         x @= 24 @_if([1, 2, 3])
         assert x == 24
