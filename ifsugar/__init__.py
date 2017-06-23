@@ -20,7 +20,7 @@ example:
 >>> assert list(n.append(0) or len(n) for _ in 5 @_times) == [1, 2, 3, 4, 5]
 
 >>> _as @ globals()  # init once
->>> assert (_as @ {}, _.setdefault(1, 9), _[1])[-1] == 9
+>>> assert (({1: 0} @_as).clear(), _.setdefault(1, 9), _[1]) [-1] == 9
 """
 
 from . import ifsugar

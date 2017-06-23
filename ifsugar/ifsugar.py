@@ -50,12 +50,12 @@ _times = SugarTimes()
 class SugarAs:
     globs = None
     def __matmul__(self, right_opnd):
-        if self.globs is None:
-            self.globs = right_opnd
-            return self
-        else:
-            self.globs['_'] = right_opnd
-            return right_opnd
+        self.globs = right_opnd
+
+    def __rmatmul__(self, left_opnd):
+        assert self.globs is not None, "'_as @ globals()' is needed"
+        self.globs['_'] = left_opnd
+        return left_opnd
 
 
 _as = SugarAs()
@@ -89,5 +89,5 @@ if __name__ == "__main__":
         assert m == [1, 2] and n == [0, 0]
 
     _as @ globals()
-    m = ( _as @ {}, _.setdefault(1, 9), 0, _[1] )[-1]
+    m = ( {} @_as, _.setdefault(1, 9), 0, _[1] ) [-1]
     assert m == 9

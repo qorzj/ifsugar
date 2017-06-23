@@ -111,9 +111,9 @@ i.e. `n @_times` is equivalent to `itertools.repeat(None, n)`
 ```
 _as @ globals()  # init once and at beginning
 ... ...
-[_as @ {}, _.setdefault(1, 9)]
+[({} @_as).clear(), _.setdefault(1, 9)]
 ```
 is equivalent to
 ```
-[_ := {}, _.setdefault(1, 9)]
+[_ := {}, _.clear(), _.setdefault(1, 9)]
 ```
