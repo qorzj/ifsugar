@@ -1,5 +1,5 @@
 from itertools import repeat
-__all__ = ["_if", "_try", "_times"]
+__all__ = ["_if", "_try", "_times", "_as"]
 
 
 class SugarNil:
@@ -47,6 +47,20 @@ class SugarTimes:
 _times = SugarTimes()
 
 
+class SugarAs:
+    globs = None
+    def __matmul__(self, right_opnd):
+        if self.globs is None:
+            self.globs = right_opnd
+            return self
+        else:
+            self.globs['_'] = right_opnd
+            return right_opnd
+
+
+_as = SugarAs()
+
+
 if __name__ == "__main__":
     if "test _if":
         x = 42
@@ -73,3 +87,7 @@ if __name__ == "__main__":
             n.pop()
 
         assert m == [1, 2] and n == [0, 0]
+
+    _as @ globals()
+    m = ( _as @ {}, _.setdefault(1, 9), 0, _[1] )[-1]
+    assert m == 9
