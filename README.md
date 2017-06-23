@@ -106,3 +106,14 @@ for _ in itertools.repeat(None, n):
 ```
 
 i.e. `n @_times` is equivalent to `itertools.repeat(None, n)`
+
+## Sugar: _as
+```
+_as @ globals()  # init once and at beginning
+... ...
+[_as @ {}, _.setdefault(1, 9)]
+```
+is equivalent to
+```
+[_ := {}, _.setdefault(1, 9)]
+```
